@@ -27,72 +27,75 @@
 </p>
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## 프로젝트 소개
 
-There are many great .NET obfuscators available on internet, however, I didn't find one that really suit my needs so I create this list. I want to gather all over .NET Obfuscator so that it'll be the last one you ever need.
-
+인터넷에서 사용할 수 있는 훌륭한 .Net 난독화 프로그램이 많지만 제 요구에 정말 맞는것을 찾지 못해 이 목록을 만듭니다.
 
 <!-- utilization EXAMPLES -->
 ## Utilization
 
-Certain languages like Java and .NET can be easily decompiled into readable source code. Code obfuscation is a process that makes your application binaries harder to read with a decompiler. It’s an important tool for protecting your business’s intellectual property.
-### Why Obfuscate Code?
+Java 및 .NET과 같은 특정 언어는 쉽게 읽을 수 있는 소스 코드로 디컴파일할 수 있습니다. 코드 난독화는 디컴파일러로 애플리케이션 바이너리를 읽기 어렵게 만드는 프로세스입니다. 기업의 지적 재산을 보호하기 위한 중요한 도구입니다.
 
-Compiled languages like C++ get converted directly to bytecode. The only way to reverse engineer how they work is with a disassembler, which is an arduous and complicated process. It’s not impossible, but trying to infer high level application logic from a stream of assembly language is hard.
+### 코드를 난독화하는 이유는 무엇입니까?
 
-On the other hand, languages like C# and Java aren’t compiled for any particular operating system. Rather, they’re compiled to an intermediary language, like .NET’s MSIL. The intermediary language is similar to assembly, but it can be easily converted back into the source code. This means that if you have a public DLL or executable that your business is distributing, anyone with a copy of your executable can open it up in a .NET decompiler like dotPeek, and directly read (and copy) your source code.
+C++와 같은 컴파일된 언어는 바이트코드로 직접 변환됩니다. 작동 방식을 리버스 엔지니어링하는 유일한 방법은 어렵고 복잡한 프로세스인 디스어셈블러를 사용하는 것입니다. 불가능한 것은 아니지만 어셈블리 언어 스트림에서 높은 수준의 응용 프로그램 논리를 추론하는 것은 어렵습니다.
 
-Code obfuscation can’t prevent this process—any .NET DLL can be plugged into a decompiler. What obfuscation does do is use a number of tricks to make the source code annoying as hell to read and debug.
+반면에 C# 및 Java와 같은 언어는 특정 운영 체제용으로 컴파일되지 않습니다. 오히려 .NET의 MSIL과 같은 중간 언어로 컴파일됩니다. 중개 언어는 어셈블리와 유사하지만 쉽게 소스 코드로 다시 변환할 수 있습니다. 즉, 비즈니스에서 배포하는 공용 DLL 또는 실행 파일이 있는 경우 실행 파일의 복사본이 있는 사람은 누구나 dotPeek과 같은 .NET 디컴파일러에서 이를 열고 소스 코드를 직접 읽고(및 복사할) 수 있습니다.
 
-The simplest form of this is entity renaming. It’s common practice to properly name variables, methods, classes, and parameters according to what they do. But you don’t have to, and technically there’s nothing stopping you from naming them with a series of lowercase L’s and I’s, or random combinations of Chinese unicode characters. To the computer, there’s no issue, but it’s completely illegible to a human:
+코드 난독화는 이 프로세스를 막을 수 없습니다. 모든 .NET DLL을 디컴파일러에 연결할 수 있습니다. 난독화는 여러 가지 트릭을 사용하여 소스 코드를 읽고 디버그하는 데 짜증나게 만듭니다.
+
+이것의 가장 간단한 형태는 엔티티 이름 바꾸기입니다. 그들이 하는 일에 따라 변수, 메소드, 클래스 및 매개변수의 이름을 적절하게 지정하는 것이 일반적입니다. 그러나 그럴 필요는 없으며 기술적으로 일련의 소문자 L과 I 또는 중국어 유니코드 문자의 임의 조합으로 이름을 지정하는 것을 막을 수 있는 방법은 없습니다. 컴퓨터에는 문제가 없지만 사람은 완전히 읽을 수 없습니다.
 
 ```
 IlIIIIlIIIllIIIllIIll
 lIIIllIIllIlIIIIlIIIl
 ```
 
-An basic obfuscator will handle this process automatically, taking the output from the build, and converting it to something that’s a lot harder to read. There’s **no performance hit** compared to non-obfuscated code
+기본 obfuscator는 이 프로세스를 자동으로 처리하여 빌드에서 출력을 가져와 훨씬 더 읽기 어려운 것으로 변환합니다. 난독화되지 않은 코드에 비해 성능 저하가 없습니다 .
 
-More advanced obfuscators can go further, and actually change the structure of your source code. This includes replacing control structures with more complicated but semantically identical syntax. They can also insert dummy code that doesn’t do anything except confuse the decompiler. The effect of this is that it makes your source look like spaghetti code, making it more annoying to read.
+고급 난독화 도구는 더 나아가 소스 코드의 구조를 실제로 변경할 수 있습니다. 여기에는 제어 구조를 더 복잡하지만 의미상 동일한 구문으로 바꾸는 것이 포함됩니다. 그들은 또한 디컴파일러를 혼동시키는 것 외에는 아무 것도 하지 않는 더미 코드를 삽입할 수 있습니다. 이것의 효과는 소스를 스파게티 코드처럼 보이게 하여 읽기를 더 성가시게 만든다는 것입니다.
 
-Another common focus is hiding strings from decompilers. In managed executables, you can search for strings like error messages to locate sections of code. String obfuscation replaces strings with encoded messages, which are decrypted at runtime, making it impossible to search for them from a decompiler. This usually comes with a performance penalty.
+또 다른 일반적인 초점은 디컴파일러에서 문자열을 숨기는 것입니다. 관리되는 실행 파일에서 오류 메시지와 같은 문자열을 검색하여 코드 섹션을 찾을 수 있습니다. 문자열 난독화는 문자열을 인코딩된 메시지로 바꿉니다. 이 메시지는 런타임에 해독되므로 디컴파일러에서 문자열을 검색할 수 없습니다. 이것은 일반적으로 성능 저하와 함께 제공됩니다.
 
-### Other Options: Convert to a Compiled Language
+### 기타 옵션: 컴파일된 언어로 변환
 
-Converting one programming language to another isn’t an entirely crazy idea—Unity uses IL2CPP, a converter that transforms .NET code into compiled C++ bytecode. It’s a lot more performant, but it also helps secure games against easy cracking, which is crucial for an environment plagued by piracy and cheaters.
+한 프로그래밍 언어를 다른 프로그래밍 언어로 변환하는 것은 완전히 미친 아이디어가 아닙니다. Unity는 .NET 코드를 컴파일된 C++ 바이트코드로 변환하는 변환기인 IL2CPP를 사용합니다. 성능은 훨씬 뛰어나지만 불법 복제와 사기꾼이 만연한 환경에서 중요한 쉬운 크래킹으로부터 게임을 보호하는 데도 도움이 됩니다.
 
-Microsoft has [CoreRT](https://github.com/dotnet/corert), an experimental .NET Core runtime using Ahead-Of-Time compilation, though it isn’t ready for production use.
+Microsoft에는 Ahead-Of-Time 컴파일을 사용하는 실험적인 .NET Core 런타임인 CoreRT 가 있지만 프로덕션용으로 사용할 준비가 되지 않았습니다.
 
-### Should You Obfuscate?
+### 난독화해야합니까?
 
-If you’re deploying code in untrusted environments where you want to protect your source code, you should almost always use at least a basic obfuscator to rename functions, methods, and properties to make decompiling take a bit more effort.
+소스 코드를 보호하려는 신뢰할 수 없는 환경에 코드를 배포하는 경우 거의 항상 최소한 기본 난독화기를 사용하여 함수, 메서드 및 속성의 이름을 변경하여 디컴파일에 더 많은 노력을 기울여야 합니다.
 
-If you really need nobody to be able to decompile your app, you can use a more intrusive obfuscator, but really you should consider if the problem would be better solved by switching to a language that doesn’t have this issue, such as C++ or Rust.
+앱을 디컴파일할 수 있는 사람이 정말로 필요하지 않은 경우에는 더 방해가 되는 난독화 도구를 사용할 수 있지만 실제로 C++ 또는 녹.
 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/NotPrab/.NET-Obfuscator/issues) for a list of proposed features (and known issues).
+제안된 기능(및 알려진 문제) 목록은 미해결 문제 를 참조하세요 .
+https://github.com/NotPrab/.NET-Obfuscator/issues)
 
 
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+기여는 오픈 소스 커뮤니티를 배우고 영감을 주고 창조할 수 있는 놀라운 장소로 만드는 것입니다. 귀하의 기여에 크게 감사드립니다 .
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. 프로젝트를 포크
+2. 분기 만들기 (`git checkout -b feature/AmazingFeature`)
+3. 변경 사항 커밋 (`git commit -m 'Add some AmazingFeature'`)
+4. 분기에 푸시 (`git push origin feature/AmazingFeature`)
+5. 풀 리퀘스트 열기
 
 
 <!-- LICENSE -->
 ## License
 
+MIT 라이선스에 따라 배포됩니다. 자세한 내용은 LICENSE를 참조하십시오.
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## References
+코드 난독화란 무엇이며 사용해야 합니까? 앤서니 헤딩스
 [What is Code Obfuscation, and Should you use it?](https://www.cloudsavvyit.com/6923/what-is-code-obfuscation-and-should-you-use-it/) by Anthony Heddings
 
 
@@ -102,33 +105,33 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- A -->
 ## A =>
 ### Agile
-* [Agile](https://secureteam.net/acode-features-detailed)- Agile.NET, Powerful Code Protection, Obfuscation, and Licensing Solution for your .NET Apps
+* [Agile](https://secureteam.net/acode-features-detailed)- .NET 앱을 위한 강력한 코드 보호, 난독화 및 라이선스 솔루션
 
 ### Aldaray Rummage Obfuscator
-* [Aldaray Rummage Obfuscator](https://www.aldaray.com/) - Tie your code into knots and make the hackers cry
+* [Aldaray Rummage Obfuscator](https://www.aldaray.com/) - 코드를 매듭으로 묶고 해커를 울게 만드십시오.
 ### AppFuscator
-* [AppFuscator](https://appfuscator.com/) - Inteligence algorithm provide your application powerful protection! 
+* [AppFuscator](https://appfuscator.com/) - 인텔리전스 알고리즘은 애플리케이션에 강력한 보호 기능을 제공합니다!
 ### ArmDot
-* [ArmDot](https://www.armdot.com/) - Protection, software licensing tool, and obfuscator for C# and .Net with support of serial keys and files embedding
+* [ArmDot](https://www.armdot.com/) - 직렬 키 및 파일 임베딩을 지원하는 C# 및 .Net용 보호, 소프트웨어 라이선스 도구 및 난독화 도구
 ### Arya
-* [Arya](https://github.com/HarmJ0y/Arya) - Arya is a simple obfuscator for .NET binaries.
+* [Arya](https://github.com/HarmJ0y/Arya) - Arya는 .NET 바이너리를 위한 간단한 난독화 도구입니다
 ### AsStrongAsFuck
-* [AsStrongAsFuck](https://github.com/Charterino/AsStrongAsFuck) - A console obfuscator for .NET assemblies.
+* [AsStrongAsFuck](https://github.com/Charterino/AsStrongAsFuck) - .NET 어셈블리용 콘솔 난독화 도구입니다.
 
 ------------------
 <!-- B -->
 ## B =>
 ### Babel
-* [Babel](https://www.babelfor.net/) - Protect your software against reverse engineering to safeguard the intellectual property of your code
+* [Babel](https://www.babelfor.net/) - 리버스 엔지니어링으로부터 소프트웨어를 보호하여 코드의 지적 재산을 보호합니다.
 ### Beds Protector
 
-* [Beds Protector](https://github.com/BedTheGod/ConfuserEx-Mod-By-Bed) - Beds Protector | Best free obfuscation out right now ( ConfuserEx Mod )
+* [Beds Protector](https://github.com/BedTheGod/ConfuserEx-Mod-By-Bed) - 침대 수호자 | 현재 최고의 무료 난독화(ConfuserEx Mod)
 ### BitHelmet
 
-* [BitHelmet](https://bithelmet.software.informer.com/) - BitHelmet obfuscator protects your .NET Portable Executables 
+* [BitHelmet](https://bithelmet.software.informer.com/) - BitHelmet obfuscator는 .NET Portable Executables를 보호합니다.
 ### BoxedApp
 
-* [BoxedApp](https://www.boxedapp.com/) - Import and virtualize ActiveX, Flash and .Net runtime • Rich SDK for developers • Create custom packers • Supports both 32-bit and 64-bit applications • Virtual file system and registry
+* [BoxedApp](https://www.boxedapp.com/) - ActiveX, Flash 및 .Net 런타임 가져오기 및 가상화 • 개발자를 위한 풍부한 SDK • 맞춤형 패커 생성 • 32비트 및 64비트 애플리케이션 모두 지원 • 가상 파일 시스템 및 레지스트리
 ------------------
 <!-- C -->
 ## C =>
